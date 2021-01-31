@@ -38,7 +38,13 @@ void outputToFile(float *T, int step){
 	*/
 	
 	std::string filename = std::to_string(step);
-	std::ofstream outfile ("result/" + filename + ".dat");
+	/*It is better to save the results to a specific folder result. 
+	You can create that folder and uncomment below line and comment the line in commented scope
+	//std::ofstream outfile ("result/" + filename + ".dat");
+	and comment the next line
+	*/
+	std::ofstream outfile (filename + ".dat");
+	
 	for (int i=0; i <= nx; i++){
 		outfile <<i<< "  "<< T[i]<< std::endl;
 	}	
@@ -108,6 +114,11 @@ void outputFinalResult(float *T){
 }
 
 
+void deallocateArray(float *Arr){
+	delete[] Arr; 
+}
+
+
 int main ( )
 {	
 	/*In IT it is common practice to build your code from different "blocks" and then construct from them 
@@ -120,6 +131,9 @@ int main ( )
  
 	solveOneDimHeatEquation(T, previousT);
 	outputFinalResult(T);
+	
+	deallocateArray(T);
+	deallocateArray(previousT);
   
 	return 0;
 }
